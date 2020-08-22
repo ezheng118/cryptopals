@@ -22,7 +22,7 @@ with open('./s1c4.txt', 'rb') as bfile:
     while(line):
         line = unhexlify(line)
 
-        for key in range(60, 100):
+        for key in range(50, 110):
             res = ''.join(chr(key^ch) for ch in line).lower()
             count = Counter(res)
             score = sum([abs(v - count[k]) for k, v in freq.items()])
@@ -31,9 +31,10 @@ with open('./s1c4.txt', 'rb') as bfile:
                 xor = hexlify(line)
                 xorkey = key
                 xorscore = score
+                
 
         line = bfile.readline().strip()
 
 print(xor)
-print(unhexlify(xor))
 print(''.join(chr(xorkey^ch) for ch in unhexlify(xor)))
+print(xorkey)
