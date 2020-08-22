@@ -1,3 +1,5 @@
+# detect single byte xor
+
 from binascii import unhexlify, hexlify
 from collections import Counter
 
