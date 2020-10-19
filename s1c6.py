@@ -1,5 +1,6 @@
 from base64 import b64decode
 from collections import Counter
+from binascii import hexlify
 
 freq = {'e': 12.02, 't': 9.10, 'a': 8.12, 'o': 7.68,
     'i': 7.31, 'n': 6.95, 's': 6.28, 'r': 6.02,
@@ -33,9 +34,9 @@ if __name__ == "__main__":
         smallest_hdist = [float('inf')]*3
         for i in range(2, 41):
             hdist = []
-            for h in range(textlen//i):
-                block1 = xor_txt[:i*h]
-                block2 = xor_txt[i*h:i*(h+1)]
+            for h in range(4):
+                block1 = xor_txt[i*h:i*(h+1)]
+                block2 = xor_txt[i*(h+1):i*(h+2)]
 
                 # divide the hamming distance by the number of bits to normalize
                 try:
@@ -43,7 +44,7 @@ if __name__ == "__main__":
                 except AssertionError as aerr:
                     continue
             hdist = sum(hdist)/len(hdist)
-            
+
             if hdist < smallest_hdist[0]:
                 smallest_hdist[1:3] = smallest_hdist[0:2]
                 smallest_hdist[0] = hdist
@@ -82,6 +83,7 @@ if __name__ == "__main__":
                         #print(decoded_text)
 
                 keys.append(xorkey)
+                #print(xorscore)
 
             final = ''.join(chr(ch^keys[i%bsize]) for i, ch in enumerate(xor_txt))
             print(final)
